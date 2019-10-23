@@ -1,0 +1,5 @@
+profile: service
+defaultPackage: agenda
+---
+testFramework: junit
+sourceLanguage: java
