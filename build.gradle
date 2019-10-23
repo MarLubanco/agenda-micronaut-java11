@@ -19,24 +19,38 @@ configurations {
     developmentOnly 
 }
 
+ext {
+    micronautDataVersion = "1.0.0.M3"
+    micronautVersion = "1.2.4"
+}
+
 dependencies {
-    annotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
-    annotationProcessor "io.micronaut:micronaut-inject-java"
-    annotationProcessor "io.micronaut:micronaut-validation"
     implementation platform("io.micronaut:micronaut-bom:$micronautVersion")
+    annotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
+    testAnnotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
+    compile 'io.micronaut.data:micronaut-data-hibernate-jpa'
+    annotationProcessor "io.micronaut:micronaut-inject-java"
+    annotationProcessor "io.micronaut:micronaut-graal"
+    annotationProcessor "io.micronaut:micronaut-validation"
+    annotationProcessor "io.micronaut.data:micronaut-data-processor:$micronautDataVersion"
+
+    compileOnly "com.oracle.substratevm:svm"
     implementation "io.micronaut:micronaut-inject"
     implementation "io.micronaut:micronaut-validation"
     implementation "io.micronaut:micronaut-runtime"
-    implementation "javax.annotation:javax.annotation-api"
-    implementation "io.micronaut:micronaut-http-server-netty"
     implementation "io.micronaut:micronaut-http-client"
-    runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
-    testAnnotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
+    implementation "io.micronaut:micronaut-http-server-netty"
+    implementation "io.micronaut.data:micronaut-data-hibernate-jpa:$micronautDataVersion", {
+        exclude group:'io.micronaut.configuration', module:'micronaut-hibernate-jpa-spring'
+    }
+    runtime "ch.qos.logback:logback-classic:1.2.3"
+    runtime "com.h2database:h2"
+    runtime "io.micronaut.configuration:micronaut-jdbc-hikari"
+
     testAnnotationProcessor "io.micronaut:micronaut-inject-java"
-    testImplementation platform("io.micronaut:micronaut-bom:$micronautVersion")
-    testImplementation "org.junit.jupiter:junit-jupiter-api"
-    testImplementation "io.micronaut.test:micronaut-test-junit5"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
+    testCompile "org.junit.jupiter:junit-jupiter-api"
+    testCompile "io.micronaut.test:micronaut-test-junit5"
+    testRuntime "org.junit.jupiter:junit-jupiter-engine"
 }
 
 test.classpath += configurations.developmentOnly
