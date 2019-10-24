@@ -16,7 +16,7 @@ public class ContactServiceTest {
 
     @Test
     private void saveContact_deveSalvarNovoContato() throws Exception {
-        Contact contact = new Contact(1,"Thome", "Francisconi");
+        Contact contact = new Contact(1,"Thome", "Francisconi", null);
         contactService.saveContact(contact);
         Contact contatoRecuperado = contactService.findContactByName(contact.getNome());
         Assertions.assertEquals(contact.getNome(), contatoRecuperado.getNome());

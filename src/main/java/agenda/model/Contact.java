@@ -1,10 +1,10 @@
 package agenda.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.micronaut.data.annotation.AutoPopulated;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Contact {
@@ -16,6 +16,10 @@ public class Contact {
     private String nome;
 
     private String sobrenome;
+
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "contactList")
+    @JsonIgnore
+    private List<Grupo> groupos;
 
     public Contact(Integer id, String nome, String sobrenome) {
         this.id = id;
@@ -48,5 +52,13 @@ public class Contact {
 
     public void setSobrenome(String sobrenome) {
         this.sobrenome = sobrenome;
+    }
+
+    public List<Grupo> getGroupos() {
+        return groupos;
+    }
+
+    public void setGroupos(List<Grupo> groupos) {
+        this.groupos = groupos;
     }
 }
